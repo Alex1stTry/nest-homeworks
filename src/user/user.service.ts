@@ -17,11 +17,11 @@ export class UserService {
     return `This action returns a #${id} user` as any;
   }
 
-  update(id: number, updateUserDto: UpdateUserReqDto): Promise<any> {
+  update(id: string, updateUserDto: UpdateUserReqDto): Promise<any> {
     return `This action updates a #${id} user` as any;
   }
 
-  remove(id: number) {
+  remove(id: string) {
     return `This action removes a #${id} user`;
   }
 }

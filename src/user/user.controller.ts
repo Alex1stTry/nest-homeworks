@@ -55,11 +55,11 @@ export class UserController {
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserReqDto,
   ): Promise<any> {
-    return await this.userService.update(+id, updateUserDto);
+    return await this.userService.update(id, updateUserDto);
   }
   @ApiBearerAuth()
   @Delete(':id')
   public async remove(@Param('id') id: string): Promise<any> {
-    return this.userService.remove(+id);
+    return this.userService.remove(id);
   }
 }
