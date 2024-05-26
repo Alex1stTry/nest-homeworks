@@ -7,18 +7,24 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Users example')
+    .setDescription('The users API description')
     .setVersion('1.0')
     .addBearerAuth({
-      in: 'header',
-      type: 'http',
       scheme: 'bearer',
+      type: 'http',
       bearerFormat: 'JWT',
+      in: 'header',
     })
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('docs', app, document); //swagger
+  SwaggerModule.setup('api', app, document, {
+    swaggerOptions: {
+      docExpansion: 'list',
+      defaultModelsExpandDepth: 2,
+      persistAuthorization: true,
+    },
+  });
 
   await app.listen(3000, '0.0.0.0', () => {
     console.log('Server start on http://localhost:3000');
