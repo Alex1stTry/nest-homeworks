@@ -11,14 +11,14 @@ async function bootstrap() {
     .setDescription('The users API description')
     .setVersion('1.0')
     .addBearerAuth({
-      scheme: 'bearer',
       type: 'http',
+      scheme: 'bearer',
       bearerFormat: 'JWT',
       in: 'header',
     })
     .build();
   const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document, {
+  SwaggerModule.setup('docs', app, document, {
     swaggerOptions: {
       docExpansion: 'list',
       defaultModelsExpandDepth: 2,

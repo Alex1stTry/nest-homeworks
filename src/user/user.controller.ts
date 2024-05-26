@@ -7,40 +7,57 @@ import {
   Patch,
   Post,
 } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
 
-import { CreateUserDto } from './dto/create-user.dto';
-import { UpdateUserDto } from './dto/update-user.dto';
+import { CreateUserReqDto } from './dto/req/create-user.req.dto';
+import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
+import { PrivateUserResponseDto } from './dto/res/private-user.response.dto';
+import { PublicUserResponseDto } from './dto/res/public-user.response.dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
+@ApiForbiddenResponse({ description: 'Forbidden' })
+@ApiUnauthorizedResponse({ description: 'Unauthorized' })
+@ApiNotFoundResponse({ description: 'Not found' })
 @Controller('user')
+@ApiOkResponse({ type: PublicUserResponseDto })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
   @Post()
-  public async create(@Body() createUserDto: CreateUserDto): Promise<any> {
-    return this.userService.create(createUserDto);
+  public async create(
+    @Body() createUserDto: CreateUserReqDto,
+  ): Promise<PrivateUserResponseDto> {
+    return await this.userService.create(createUserDto);
   }
 
   @Get()
   public async findAll(): Promise<any> {
-    return this.userService.findAll();
+    return await this.userService.findAll();
   }
-
+  @ApiBearerAuth()
   @Get(':id')
-  public async findOne(@Param('id') id: string): Promise<any> {
-    return this.userService.findOne(+id);
+  public async findOne(
+    @Param('id') id: string,
+  ): Promise<PrivateUserResponseDto> {
+    return await this.userService.findOne(id);
   }
 
   @Patch(':id')
   public async update(
     @Param('id') id: string,
-    @Body() updateUserDto: UpdateUserDto,
+    @Body() updateUserDto: UpdateUserReqDto,
   ): Promise<any> {
-    return this.userService.update(+id, updateUserDto);
+    return await this.userService.update(+id, updateUserDto);
   }
-
+  @ApiBearerAuth()
   @Delete(':id')
   public async remove(@Param('id') id: string): Promise<any> {
     return this.userService.remove(+id);
