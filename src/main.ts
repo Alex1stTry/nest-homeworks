@@ -1,11 +1,17 @@
 import { ValidationPipe } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { AppModule } from './app.module';
+import { AppConfig } from './configs/configs.type';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  const configService = app.get(ConfigService);
+  const appConfig = configService.get<AppConfig>('app');
+
   app.useGlobalPipes(
     new ValidationPipe({
       transform: true,
@@ -34,9 +40,11 @@ async function bootstrap() {
     },
   });
 
-  await app.listen(3000, '0.0.0.0', () => {
-    console.log('Server start on http://localhost:3000');
-    console.log('Swager start on http://localhost:3000/docs');
+  await app.listen(appConfig.port, appConfig.host, () => {
+    console.log(`Server start on http://${appConfig.host}:${appConfig.port}`);
+    console.log(
+      `Swagger start on http://${appConfig.host}:${appConfig.port}/docs`,
+    );
   });
 }
 void bootstrap();

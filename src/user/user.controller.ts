@@ -26,7 +26,7 @@ import { UserService } from './user.service';
 @ApiForbiddenResponse({ description: 'Forbidden' })
 @ApiUnauthorizedResponse({ description: 'Unauthorized' })
 @ApiNotFoundResponse({ description: 'Not found' })
-@Controller('user')
+@Controller('users')
 @ApiOkResponse({ type: PublicUserResponseDto })
 export class UserController {
   constructor(private readonly userService: UserService) {}
@@ -51,6 +51,7 @@ export class UserController {
   }
 
   @Patch(':id')
+  @ApiBearerAuth()
   public async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserReqDto,
