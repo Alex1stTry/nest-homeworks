@@ -18,8 +18,8 @@ lerna-debug.log*
 # Tests
 /coverage
 /.nyc_output
-sept-2023-api-s3-data-api-db
-sept-2023-api-db
+my-first-api-db
+my-first-api-s3-data
 # IDEs and editors
 /.idea
 .project

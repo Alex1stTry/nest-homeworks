@@ -10,8 +10,8 @@ export default (): Config => ({
   database: {
     port: parseInt(process.env.POSTGRES_PORT) || 5433,
     host: process.env.POSTGRES_HOST,
-    user: process.env.POSTGRES_PORT,
-    password: process.env.POSTGRES_PORT,
+    user: process.env.POSTGRES_USER,
+    password: process.env.POSTGRES_PASSWORD,
     dbName: process.env.POSTGRES_DB,
   },
   redis: {

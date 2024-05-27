@@ -1,26 +1,26 @@
 version: '3.8'
 
 services:
-  sept-2023-postgres:
+  my-first-postgres:
     image: postgres:16.1
     ports:
       - '${POSTGRES_PORT:-5433}:5432'
     environment:
       POSTGRES_USER: '${POSTGRES_USER:-user}'
       POSTGRES_PASSWORD: '${POSTGRES_PASSWORD:-password}'
-      POSTGRES_DB: '${POSTGRES_DB:-sept-2023}'
+      POSTGRES_DB: '${POSTGRES_DB:-my-first}'
     volumes:
-      - ./sept-2023-api-db:/var/lib/postgresql/sept-2023
+      - ./my-first-api-db:/var/lib/postgresql/my-first
 
-  sept-2023-redis:
+  -my-first-redis:
     image: redis:7.2.3
     ports:
       - '${REDIS_PORT:-6379}:6379'
     command: >
-      --requirepass '${REDIS_PASSWORD:-redispass}'
+          --requirepass '${REDIS_PASSWORD:-redispass}'
     restart: unless-stopped
 
-  sept-2023-s3:
+  -my-firsts3:
     image: quay.io/minio/minio:latest
     command: server /data --console-address ":9001"
     restart: unless-stopped
@@ -34,5 +34,5 @@ services:
       MINIO_ROOT_PASSWORD: '${AWS_S3_SECRET_KEY:-password}'
 
 volumes:
-  sept-2023-api-db:
-  sept-2023-api-s3:
+  my-first-api-db:
+  my-first-api-s3:
