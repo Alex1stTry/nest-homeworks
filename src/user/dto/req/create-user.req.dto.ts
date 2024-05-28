@@ -1,3 +1,4 @@
+import { ApiProperty } from '@nestjs/swagger';
 import { Transform } from 'class-transformer';
 import {
   IsEmail,
@@ -30,12 +31,18 @@ export class CreateUserReqDto {
   @IsInt({ message: validationMessages.int })
   public readonly age: number;
 
+  @IsString()
+  @ApiProperty({
+    required: true,
+  })
   @Matches(regexConstants.email)
   @IsEmail()
-  @IsString()
   @Transform(TransformHelper.trim)
   public readonly email: string;
 
+  @ApiProperty({
+    required: true,
+  })
   @Matches(regexConstants.password)
   @IsString()
   @Transform(TransformHelper.trim)

@@ -19,7 +19,6 @@ import {
 import { CreateUserReqDto } from './dto/req/create-user.req.dto';
 import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
 import { PrivateUserResponseDto } from './dto/res/private-user.response.dto';
-import { PublicUserResponseDto } from './dto/res/public-user.response.dto';
 import { UserService } from './user.service';
 
 @ApiTags('Users')
@@ -27,7 +26,7 @@ import { UserService } from './user.service';
 @ApiUnauthorizedResponse({ description: 'Unauthorized' })
 @ApiNotFoundResponse({ description: 'Not found' })
 @Controller('users')
-@ApiOkResponse({ type: PublicUserResponseDto })
+@ApiOkResponse({ type: PrivateUserResponseDto })
 export class UserController {
   constructor(private readonly userService: UserService) {}
 

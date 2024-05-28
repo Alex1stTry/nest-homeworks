@@ -6,6 +6,7 @@ import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
 @Injectable()
 export class UserService {
   create(createUserDto: CreateUserReqDto): Promise<any> {
+    //throw new Error('This action adds a new user');
     return `This action adds a new user` as any;
   }
 
