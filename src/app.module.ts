@@ -1,12 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { AuthModule } from './auth/auth.module';
 import configuration from './configs/configs';
-import { Config, DatabaseConfig } from './configs/configs.type';
-import { AuthEntity } from './database/entities/auth.entity';
-import { UserEntity } from './database/entities/user.entity';
+import { PostgresConnectService } from './postgres/postgres-connect.service';
 import { UserModule } from './user/user.module';
 
 @Module({
@@ -17,21 +15,10 @@ import { UserModule } from './user/user.module';
       load: [configuration],
       isGlobal: true,
     }),
+    //PostgresModule,      1 варіант
+    //2  варіант
     TypeOrmModule.forRootAsync({
-      useFactory: (configService: ConfigService<Config>) => {
-        const databaseConfig = configService.get<DatabaseConfig>('database');
-        return {
-          type: 'postgres',
-          host: databaseConfig.host,
-          port: databaseConfig.port,
-          username: databaseConfig.user,
-          password: databaseConfig.password,
-          database: databaseConfig.dbName,
-          entities: [AuthEntity, UserEntity],
-          synchronize: true,
-        };
-      },
-      inject: [ConfigService],
+      useClass: PostgresConnectService,
     }),
   ],
   controllers: [],

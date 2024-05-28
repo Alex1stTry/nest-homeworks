@@ -22,4 +22,10 @@ export class UserEntity {
 
   @Column()
   avatar: string;
+
+  @Column()
+  lastname: string;
+
+  @Column({ default: false })
+  isActive: boolean;
 }
