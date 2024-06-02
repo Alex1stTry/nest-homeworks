@@ -30,7 +30,7 @@ export class CreateUserReqDto {
   @Max(65, { message: validationMessages.maxAge })
   @IsInt({ message: validationMessages.int })
   @Type(() => Number)
-  public readonly age: number;
+  public readonly age?: number;
 
   @IsString()
   @ApiProperty({

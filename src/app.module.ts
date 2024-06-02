@@ -8,6 +8,7 @@ import configuration from './configs/configs';
 import { AuthModule } from './modules/auth/auth.module';
 import { LoggerModule } from './modules/logger/logger.module';
 import { PostgresConnectService } from './modules/postgres/postgres-connect.service';
+import { RepositoryModule } from './modules/repository/repository.module';
 import { UserModule } from './modules/user/user.module';
 
 @Module({
@@ -24,6 +25,7 @@ import { UserModule } from './modules/user/user.module';
     TypeOrmModule.forRootAsync({
       useClass: PostgresConnectService,
     }),
+    RepositoryModule,
   ],
   controllers: [],
   providers: [

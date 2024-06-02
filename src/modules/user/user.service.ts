@@ -1,14 +1,22 @@
 import { Injectable } from '@nestjs/common';
 
 import { SentryLogger } from '../logger/logger.service';
+import { UserRepository } from '../repository/services/user.repository';
 import { CreateUserReqDto } from './dto/req/create-user.req.dto';
 import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
 
 @Injectable()
 export class UserService {
-  constructor(private readonly loggerService: SentryLogger) {}
-  create(createUserDto: CreateUserReqDto): Promise<any> {
-    return `This action adds a new user` as any;
+  constructor(
+    private readonly loggerService: SentryLogger,
+    private readonly userRepository: UserRepository,
+  ) {}
+  public async create(dto: CreateUserReqDto): Promise<any> {
+    return await this.userRepository.save({
+      email: 'afafaf@gmail.com',
+      name: 'alex',
+      password: 'Password!',
+    });
   }
 
   findAll(): Promise<any> {
