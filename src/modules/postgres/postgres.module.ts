@@ -1,10 +1,4 @@
 import { Module } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
-
-import { Config, DatabaseConfig } from '../configs/configs.type';
-import { AuthEntity } from '../database/entities/auth.entity';
-import { UserEntity } from '../database/entities/user.entity';
 
 @Module({
   controllers: [],

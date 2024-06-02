@@ -1,4 +1,4 @@
-import { ValidationPipe } from '@nestjs/common';
+import { Logger, ValidationPipe } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
@@ -7,6 +7,7 @@ import { AppModule } from './app.module';
 import { AppConfig } from './configs/configs.type';
 
 async function bootstrap() {
+  const logger = new Logger();
   const app = await NestFactory.create(AppModule);
 
   const configService = app.get(ConfigService);
@@ -41,8 +42,8 @@ async function bootstrap() {
   });
 
   await app.listen(appConfig.port, appConfig.host, () => {
-    console.log(`Server start on http://${appConfig.host}:${appConfig.port}`);
-    console.log(
+    logger.log(`Server start on http://${appConfig.host}:${appConfig.port}`);
+    logger.log(
       `Swagger start on http://${appConfig.host}:${appConfig.port}/docs`,
     );
   });

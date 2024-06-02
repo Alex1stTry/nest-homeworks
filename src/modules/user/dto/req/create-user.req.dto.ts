@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { Transform } from 'class-transformer';
+import { Transform, Type } from 'class-transformer';
 import {
   IsEmail,
   IsInt,
@@ -14,9 +14,9 @@ import {
   ValidateIf,
 } from 'class-validator';
 
-import { TransformHelper } from '../../../common/helpers/transform.helper';
-import { regexConstants } from '../../../constants/regex-constants';
-import { validationMessages } from '../../../constants/validation-messages';
+import { TransformHelper } from '../../../../common/helpers/transform.helper';
+import { regexConstants } from '../../../../constants/regex-constants';
+import { validationMessages } from '../../../../constants/validation-messages';
 
 export class CreateUserReqDto {
   @IsString()
@@ -29,13 +29,14 @@ export class CreateUserReqDto {
   @Min(18, { message: validationMessages.minAge })
   @Max(65, { message: validationMessages.maxAge })
   @IsInt({ message: validationMessages.int })
+  @Type(() => Number)
   public readonly age: number;
 
   @IsString()
   @ApiProperty({
     required: true,
   })
-  @Matches(regexConstants.email)
+  @Matches(regexConstants.email, { message: validationMessages.email })
   @IsEmail()
   @Transform(TransformHelper.trim)
   public readonly email: string;
@@ -43,7 +44,7 @@ export class CreateUserReqDto {
   @ApiProperty({
     required: true,
   })
-  @Matches(regexConstants.password)
+  @Matches(regexConstants.password, { message: validationMessages.password })
   @IsString()
   @Transform(TransformHelper.trim)
   public readonly password: string;

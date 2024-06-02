@@ -3,16 +3,18 @@ import { ConfigModule } from '@nestjs/config';
 import { APP_FILTER } from '@nestjs/core';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
-import { AuthModule } from './auth/auth.module';
 import { GlobalExceptionFilter } from './common/http/global-exception-filter';
 import configuration from './configs/configs';
-import { PostgresConnectService } from './postgres/postgres-connect.service';
-import { UserModule } from './user/user.module';
+import { AuthModule } from './modules/auth/auth.module';
+import { LoggerModule } from './modules/logger/logger.module';
+import { PostgresConnectService } from './modules/postgres/postgres-connect.service';
+import { UserModule } from './modules/user/user.module';
 
 @Module({
   imports: [
     UserModule,
     AuthModule,
+    LoggerModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,
