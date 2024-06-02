@@ -15,7 +15,7 @@ import {
 } from 'class-validator';
 
 import { TransformHelper } from '../../../../common/helpers/transform.helper';
-import { regexConstants } from '../../../../constants/regex-constants';
+// import { regexConstants } from '../../../../constants/regex-constants';
 import { validationMessages } from '../../../../constants/validation-messages';
 
 export class CreateUserReqDto {
@@ -23,6 +23,7 @@ export class CreateUserReqDto {
   @MinLength(3, { message: validationMessages.minName })
   @MaxLength(25, { message: validationMessages.maxName })
   @Transform(TransformHelper.trim)
+  @ApiProperty({ required: true })
   public readonly name: string;
 
   @IsNumber()
@@ -33,23 +34,19 @@ export class CreateUserReqDto {
   public readonly age?: number;
 
   @IsString()
-  @ApiProperty({
-    required: true,
-  })
-  @Matches(regexConstants.email, { message: validationMessages.email })
+  // @Matches(regexConstants.email, { message: validationMessages.email })
   @IsEmail()
-  @Transform(TransformHelper.trim)
+  @ApiProperty({ required: true })
+  // @Transform(TransformHelper.trim)
   public readonly email: string;
 
-  @ApiProperty({
-    required: true,
-  })
-  @Matches(regexConstants.password, { message: validationMessages.password })
+  // @Matches(regexConstants.password, { message: validationMessages.password })
   @IsString()
   @Transform(TransformHelper.trim)
+  @ApiProperty({ required: true })
   public readonly password: string;
 
-  @Matches(regexConstants.phone)
+  // @Matches(regexConstants.phone)
   @IsString()
   @IsOptional()
   public readonly phone?: string;

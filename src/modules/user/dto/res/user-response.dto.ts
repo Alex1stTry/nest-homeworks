@@ -16,7 +16,7 @@ export class UserResponseDto {
     example: '18',
     description: 'age of user',
   })
-  public readonly age: number;
+  public readonly age?: number;
 
   @ApiProperty({
     example: 'test@gmail.com',

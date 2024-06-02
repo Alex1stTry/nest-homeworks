@@ -20,6 +20,7 @@ import { CreateUserReqDto } from './dto/req/create-user.req.dto';
 import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
 import { PrivateUserResponseDto } from './dto/res/private-user.response.dto';
 import { UserService } from './user.service';
+import { UserResponseDto } from "./dto/res/user-response.dto";
 
 @ApiTags('Users')
 @ApiForbiddenResponse({ description: 'Forbidden' })
@@ -32,9 +33,9 @@ export class UserController {
 
   @Post()
   public async create(
-    @Body() createUserDto: CreateUserReqDto,
-  ): Promise<PrivateUserResponseDto> {
-    return await this.userService.create(createUserDto);
+    @Body() dto: CreateUserReqDto,
+  ): Promise<UserResponseDto> {
+    return await this.userService.create(dto);
   }
 
   @Get()
