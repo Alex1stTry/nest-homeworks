@@ -4,7 +4,7 @@ import { SentryLogger } from '../logger/logger.service';
 import { UserRepository } from '../repository/services/user.repository';
 import { CreateUserReqDto } from './dto/req/create-user.req.dto';
 import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
-import { UserResponseDto } from "./dto/res/user-response.dto";
+import { UserResponseDto } from './dto/res/user-response.dto';
 
 @Injectable()
 export class UserService {
@@ -14,9 +14,9 @@ export class UserService {
   ) {}
   public async create(dto: CreateUserReqDto): Promise<UserResponseDto> {
     return await this.userRepository.save({
-      name:'alex',
-      email:'ergav@mail.com',
-      password:'Afgega1qs!'
+      name: 'alex',
+      email: 'ergav@mail.com',
+      password: 'Afgega1qs!',
     });
   }
 

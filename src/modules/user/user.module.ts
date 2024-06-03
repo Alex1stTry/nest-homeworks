@@ -1,7 +1,6 @@
 import { Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 
-import { UserRepository } from '../repository/services/user.repository';
 import { UserController } from './user.controller';
 import { UserService } from './user.service';
 
@@ -14,5 +13,6 @@ import { UserService } from './user.service';
       useClass: ValidationPipe,
     },
   ],
+  exports: [UserService],
 })
 export class UserModule {}
