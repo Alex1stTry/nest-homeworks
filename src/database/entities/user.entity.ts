@@ -21,19 +21,15 @@ export class UserEntity extends BaseModel {
 
   @Column('text', { nullable: true })
   phone?: string;
-  @Column('text', { nullable: true })
-  age?: number;
 
   @Column('text', { nullable: true })
   avatar?: string;
   @Column('text', { nullable: true })
   bio?: string;
 
-  @Column('text')
-  lastname?: string;
-
   @Column({ default: false })
   isActive: boolean;
+
   @OneToMany(
     () => RefreshTokensEntity,
     (entity: RefreshTokensEntity) => entity.user,

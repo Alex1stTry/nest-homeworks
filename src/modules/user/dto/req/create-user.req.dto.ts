@@ -2,14 +2,9 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Transform, Type } from 'class-transformer';
 import {
   IsEmail,
-  IsInt,
-  IsNumber,
   IsOptional,
   IsString,
-  Matches,
-  Max,
   MaxLength,
-  Min,
   MinLength,
   ValidateIf,
 } from 'class-validator';
@@ -25,13 +20,6 @@ export class CreateUserReqDto {
   @Transform(TransformHelper.trim)
   @ApiProperty({ required: true })
   public readonly name: string;
-
-  @IsNumber()
-  @Min(18, { message: validationMessages.minAge })
-  @Max(65, { message: validationMessages.maxAge })
-  @IsInt({ message: validationMessages.int })
-  @Type(() => Number)
-  public readonly age?: number;
 
   @IsString()
   // @Matches(regexConstants.email, { message: validationMessages.email })

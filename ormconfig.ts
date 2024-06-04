@@ -4,7 +4,6 @@ import * as dotenv from 'dotenv';
 import { DataSource } from 'typeorm';
 
 import getter from './src/configs/configs';
-import { UserEntity } from './src/database/entities/user.entity';
 
 dotenv.config({ path: './environments/local.env' });
 
@@ -17,7 +16,7 @@ export default new DataSource({
   password: databaseConfig.password,
   database: databaseConfig.dbName,
   entities: [
-    path.join(process.cwd(), 'src', 'database', 'migrations', '*entity.ts'),
+    path.join(process.cwd(), 'src', 'database', 'entities', '*entity.ts'),
   ],
   migrations: [
     path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),

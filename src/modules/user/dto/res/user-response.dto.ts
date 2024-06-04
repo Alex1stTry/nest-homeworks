@@ -13,12 +13,6 @@ export class UserResponseDto {
   public readonly name: string;
 
   @ApiProperty({
-    example: '18',
-    description: 'age of user',
-  })
-  public readonly age?: number;
-
-  @ApiProperty({
     example: 'test@gmail.com',
     description: 'email of user',
     format: 'email',
