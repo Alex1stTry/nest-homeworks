@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Patch } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  ParseUUIDPipe,
+  Patch,
+} from '@nestjs/common';
 import {
   ApiBearerAuth,
   ApiForbiddenResponse,
@@ -7,6 +15,7 @@ import {
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
 
+import { UpdateUserReqDto } from './dto/req/update-user.req.dto';
 import { UserService } from './services/user.service';
 
 @ApiTags('Users')
@@ -21,16 +30,23 @@ export class UserController {
   public async findAll(): Promise<any> {
     return await this.userService.findAll();
   }
-  @ApiBearerAuth()
+
   @Get(':id')
-  public async findOne(@Param('id') id: string): Promise<any> {
+  public async findOne(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
     return await this.userService.findOne(id);
   }
-
+  @ApiBearerAuth()
   @Patch(':id')
+  public async updateMe(
+    @Param('id', ParseUUIDPipe) id: string,
+    @Body() dto: UpdateUserReqDto,
+  ): Promise<any> {
+    // return this.userService.updateMe(id, dto);
+  }
+
   @ApiBearerAuth()
   @Delete(':id')
-  public async remove(@Param('id') id: string): Promise<any> {
+  public async remove(@Param('id', ParseUUIDPipe) id: string): Promise<any> {
     return this.userService.remove(id);
   }
 }

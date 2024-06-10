@@ -1,10 +1,12 @@
-import { Module, ValidationPipe } from '@nestjs/common';
+import { forwardRef, Module, ValidationPipe } from "@nestjs/common";
 import { APP_PIPE } from '@nestjs/core';
 
-import { UserController } from './user.controller';
+import { AuthModule } from '../auth/auth.module';
 import { UserService } from './services/user.service';
+import { UserController } from './user.controller';
 
 @Module({
+  imports: [forwardRef(() => AuthModule)],
   controllers: [UserController],
   providers: [
     UserService,

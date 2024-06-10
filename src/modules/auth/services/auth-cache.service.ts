@@ -23,4 +23,13 @@ export class AuthCacheService {
     await this.redisService.addOneToSet(key, token);
     await this.redisService.expire(key, this.jwtConfig.accessExpires);
   }
+  public async isAccessTokenExist(
+    userId: string,
+    deviceId: string,
+    token: string,
+  ): Promise<boolean> {
+    const key = `ACCESS_TOKEN:${userId}:${deviceId}`;
+    const set = await this.redisService.sMembers(key);
+    return set.includes(token);
+  }
 }

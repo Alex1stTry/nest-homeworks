@@ -3,6 +3,7 @@ import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 
 import { Config, JWTConfig } from '../../../configs/configs.type';
+import { TokenTypeEnum } from '../enums/token-type.enum';
 import { IJwtPayload } from '../interfaces/jwt-payload.interface';
 import { ITokensPair } from '../interfaces/tokens.interface';
 
@@ -25,5 +26,27 @@ export class TokenService {
       expiresIn: this.jwtConfig.refreshExpires,
     });
     return { accessToken, refreshToken };
+  }
+  public async verifyToken(
+    token: string,
+    type: TokenTypeEnum,
+  ): Promise<IJwtPayload> {
+    return await this.jwtService.verifyAsync(token, {
+      secret: this.getSecret(type),
+    });
+  }
+  private getSecret(type: TokenTypeEnum): string {
+    let secret: string;
+    switch (type) {
+      case TokenTypeEnum.ACCESS:
+        secret = this.jwtConfig.accessSecret;
+        break;
+      case TokenTypeEnum.REFRESH:
+        secret = this.jwtConfig.refreshSecret;
+        break;
+      default:
+        throw new Error('Unknown token type');
+    }
+    return secret;
   }
 }

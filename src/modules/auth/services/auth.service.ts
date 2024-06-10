@@ -8,6 +8,7 @@ import { SignUpReqDto } from '../dto/req/sign-up.req.dto';
 import { AuthCacheService } from './auth-cache.service';
 import { AuthMapperService } from './auth-mapper.service';
 import { TokenService } from './token.service';
+import { AuthResDto } from "../dto/res/auth-res.dto";
 
 @Injectable()
 export class AuthService {
@@ -18,7 +19,7 @@ export class AuthService {
     private readonly refreshRepository: RefreshTokensRepository,
     private readonly authCacheService: AuthCacheService,
   ) {}
-  public async signUp(dto: SignUpReqDto): Promise<any> {
+  public async signUp(dto: SignUpReqDto): Promise<AuthResDto> {
     await this.userService.isEmailUnique(dto.email);
     const password = await bcrypt.hash(dto.password, 10);
     const user = await this.userRepository.save(
