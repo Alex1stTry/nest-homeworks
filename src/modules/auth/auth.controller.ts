@@ -1,45 +1,15 @@
-import {
-  Body,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Patch,
-  Post,
-} from '@nestjs/common';
+import { Body, Controller, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 
-import { AuthService } from './auth.service';
-import { CreateAuthReqDto } from './dto/req/create-auth.req.dto';
-import { UpdateAuthReqDto } from './dto/req/update-auth.req.dto';
+import { SignUpReqDto } from './dto/req/sign-up.req.dto';
+import { AuthService } from './services/auth.service';
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
-
-  @Post()
-  create(@Body() createAuthDto: CreateAuthReqDto) {
-    return this.authService.create(createAuthDto);
-  }
-
-  @Get()
-  findAll() {
-    return this.authService.findAll();
-  }
-
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.authService.findOne(+id);
-  }
-
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthReqDto) {
-    return this.authService.update(+id, updateAuthDto);
-  }
-
-  @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.authService.remove(+id);
+  @Post('sign-up')
+  public async signUp(@Body() dto: SignUpReqDto): Promise<any> {
+    return await this.authService.signUp(dto);
   }
 }

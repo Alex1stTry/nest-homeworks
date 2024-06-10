@@ -7,11 +7,15 @@ import { UserEntity } from './user.entity';
 @Entity({ name: TableNamesEnum.REFRESH_TOKENS })
 export class RefreshTokensEntity extends BaseModel {
   @Column('text')
-  token: string;
+  refreshToken: string;
+
   @Column('text')
-  userId: string;
+  deviceId: string;
+
   @Column('text')
+  user_id: string;
+
   @ManyToOne(() => UserEntity, (entity) => entity.refreshTokens)
-  @JoinColumn({ name: 'userId' })
+  @JoinColumn({ name: 'user_id' })
   user?: UserEntity;
 }

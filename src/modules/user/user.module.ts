@@ -2,7 +2,7 @@ import { Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 
 import { UserController } from './user.controller';
-import { UserService } from './user.service';
+import { UserService } from './services/user.service';
 
 @Module({
   controllers: [UserController],
