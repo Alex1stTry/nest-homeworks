@@ -8,4 +8,7 @@ export class RefreshTokensRepository extends Repository<RefreshTokensEntity> {
   constructor(private readonly dataSource: DataSource) {
     super(RefreshTokensEntity, dataSource.manager);
   }
+  public async isExist(refreshToken: string): Promise<boolean> {
+    return await this.exists({ where: { refreshToken } });
+  }
 }

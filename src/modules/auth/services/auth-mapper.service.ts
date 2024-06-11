@@ -1,6 +1,7 @@
 import { UserEntity } from '../../../database/entities/user.entity';
 import { UserMapperService } from '../../user/services/user-mapper.service';
 import { AuthResDto } from '../dto/res/auth-res.dto';
+import { TokensPairResDto } from '../dto/res/token-pair.res.dto';
 import { ITokensPair } from '../interfaces/tokens.interface';
 import { IUserData } from '../interfaces/user-data.interface';
 
@@ -22,6 +23,13 @@ export class AuthMapperService {
       userId: user.id,
       email: user.email,
       deviceId,
+    };
+  }
+
+  public static toResponseTokensDTO(pair: ITokensPair): TokensPairResDto {
+    return {
+      accessToken: pair.accessToken,
+      refreshToken: pair.refreshToken,
     };
   }
 }
