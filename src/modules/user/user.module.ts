@@ -1,4 +1,4 @@
-import { forwardRef, Module, ValidationPipe } from "@nestjs/common";
+import { forwardRef, Module, ValidationPipe } from '@nestjs/common';
 import { APP_PIPE } from '@nestjs/core';
 
 import { AuthModule } from '../auth/auth.module';

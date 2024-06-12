@@ -1,4 +1,5 @@
 import { UserEntity } from '../../../database/entities/user.entity';
+import { PublicUserResDto } from '../dto/res/public-user.res.dto.';
 import { UserResDto } from '../dto/res/user.res.dto';
 
 export class UserMapperService {
@@ -9,6 +10,13 @@ export class UserMapperService {
       email: user.email,
       bio: user.bio || null,
       image: user.avatar || null,
+    };
+  }
+  public static toPublicResponseDTO(user: UserEntity): PublicUserResDto {
+    return {
+      name: user.name,
+      bio: user.bio,
+      image: user.avatar,
     };
   }
 }

@@ -20,6 +20,6 @@ import { TokenService } from './services/token.service';
     { provide: APP_GUARD, useClass: JwtAccessGuard },
   ],
   imports: [forwardRef(() => UserModule), JwtModule, RedisModule],
-  exports: [],
+  exports: [AuthService],
 })
 export class AuthModule {}
