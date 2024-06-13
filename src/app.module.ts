@@ -5,6 +5,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { GlobalExceptionFilter } from './common/http/global-exception-filter';
 import configuration from './configs/configs';
+import { ArticleModule } from './modules/articles/article.module';
 import { AuthModule } from './modules/auth/auth.module';
 import { LoggerModule } from './modules/logger/logger.module';
 import { PostgresConnectService } from './modules/postgres/postgres-connect.service';
@@ -18,6 +19,7 @@ import { UserModule } from './modules/user/user.module';
     AuthModule,
     LoggerModule,
     RedisModule,
+    ArticleModule,
     ConfigModule.forRoot({
       load: [configuration],
       isGlobal: true,

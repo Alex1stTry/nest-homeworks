@@ -5,7 +5,6 @@ import {
 } from '@nestjs/common';
 
 import { IUserData } from '../../auth/interfaces/user-data.interface';
-import { AuthService } from '../../auth/services/auth.service';
 import { SentryLogger } from '../../logger/logger.service';
 import { FollowsRepository } from '../../repository/services/follows.repository';
 import { UserRepository } from '../../repository/services/user.repository';
@@ -19,7 +18,6 @@ export class UserService {
   constructor(
     private readonly loggerService: SentryLogger,
     private readonly userRepository: UserRepository,
-    // private readonly authService: AuthService,
     private readonly followRepo: FollowsRepository,
   ) {}
 

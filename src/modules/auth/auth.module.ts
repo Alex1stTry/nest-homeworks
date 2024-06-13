@@ -11,6 +11,7 @@ import { AuthCacheService } from './services/auth-cache.service';
 import { TokenService } from './services/token.service';
 
 @Module({
+  imports: [forwardRef(() => UserModule), JwtModule, RedisModule],
   controllers: [AuthController],
   providers: [
     AuthService,
@@ -19,7 +20,6 @@ import { TokenService } from './services/token.service';
     JwtAccessGuard,
     { provide: APP_GUARD, useClass: JwtAccessGuard },
   ],
-  imports: [forwardRef(() => UserModule), JwtModule, RedisModule],
-  exports: [AuthService],
+  exports: [],
 })
 export class AuthModule {}
