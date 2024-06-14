@@ -1,11 +1,17 @@
-import { Injectable } from '@nestjs/common';
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from '@nestjs/common';
 import { In } from 'typeorm';
 
+import { ArticlesEntity } from '../../../database/entities/articles.entity';
 import { TagsEntity } from '../../../database/entities/tags.entity';
 import { IUserData } from '../../auth/interfaces/user-data.interface';
 import { ArticlesRepository } from '../../repository/services/articles.repository';
 import { TagsRepository } from '../../repository/services/tags.repository';
 import { CreateArticleReqDto } from '../dto/req/create-article-req.dto';
+import { UpdateArticleReqDto } from '../dto/req/update-article.req.dto';
 import { ArticleResDto } from '../dto/res/article-res.dto';
 import { ArticleMapperService } from './article-mapper.service';
 
@@ -38,5 +44,51 @@ export class ArticleService {
       newTags.map((name) => this.tagRepo.create({ name })),
     );
     return [...entities, ...newEntities];
+  }
+  public async getById(
+    userData: IUserData,
+    articleId: string,
+  ): Promise<ArticleResDto> {
+    const articles = await this.articlesRepo.findArticleById(
+      userData,
+      articleId,
+    );
+    if (!articles) {
+      throw new NotFoundException();
+    }
+    return ArticleMapperService.toResponseDTO(articles);
+  }
+  public async updateById(
+    userData: IUserData,
+    articleId: string,
+    dto: UpdateArticleReqDto,
+  ): Promise<ArticleResDto> {
+    const article = await this.findMyArticle(userData.userId, articleId);
+    await this.articlesRepo.save({ ...article, ...dto });
+    const updatedArticle = await this.articlesRepo.findArticleById(
+      userData,
+      articleId,
+    );
+    return ArticleMapperService.toResponseDTO(updatedArticle);
+  }
+  public async deleteById(
+    userData: IUserData,
+    articleId: string,
+  ): Promise<void> {
+    const article = await this.findMyArticle(userData.userId, articleId);
+    await this.articlesRepo.remove(article);
+  }
+  public async findMyArticle(
+    userId: string,
+    articleId: string,
+  ): Promise<ArticlesEntity> {
+    const article = await this.articlesRepo.findOneBy({ id: articleId });
+    if (!article) {
+      throw new NotFoundException();
+    }
+    if (article.userId !== userId) {
+      throw new ForbiddenException();
+    }
+    return article;
   }
 }

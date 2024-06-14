@@ -26,7 +26,7 @@ export class AuthService {
     await this.userService.isEmailUnique(dto.email);
     const password = await bcrypt.hash(dto.password, 10);
     const user = await this.userRepository.save(
-      await this.userRepository.create({ ...dto, password }),
+      this.userRepository.create({ ...dto, password }),
     );
     const pair = await this.tokenService.generateTokens({
       userId: user.id,
@@ -69,6 +69,20 @@ export class AuthService {
       }),
       this.authCacheService.deleteToken(user.id, dto.deviceId),
     ]); // delete tokens made in signUp
+    await Promise.all([
+      await this.refreshRepository.save(
+        this.refreshRepository.create({
+          user_id: user.id,
+          deviceId: dto.deviceId,
+          refreshToken: pair.refreshToken,
+        }),
+      ),
+      await this.authCacheService.saveToken(
+        pair.accessToken,
+        user.id,
+        dto.deviceId,
+      ),
+    ]);
     const userEntity = await this.userRepository.findOneBy({ id: user.id });
     return AuthMapperService.toResponseDTO(userEntity, pair);
   }

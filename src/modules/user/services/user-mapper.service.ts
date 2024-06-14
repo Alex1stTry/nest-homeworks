@@ -10,6 +10,7 @@ export class UserMapperService {
       email: user.email,
       bio: user.bio || null,
       image: user.avatar || null,
+      isFollowed: user.followings ? user.followings.length < 0 : false,
     };
   }
   public static toPublicResponseDTO(user: UserEntity): PublicUserResDto {

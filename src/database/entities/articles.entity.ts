@@ -36,9 +36,10 @@ export class ArticlesEntity extends BaseModel {
 
   @Column('text')
   userId: string;
+
   @ManyToOne(() => UserEntity, (entity) => entity.articles)
   @JoinColumn({ name: 'userId' })
-  article?: UserEntity;
+  user?: UserEntity;
 
   @ManyToMany(() => TagsEntity, (entity) => entity.articles)
   tags?: TagsEntity[];

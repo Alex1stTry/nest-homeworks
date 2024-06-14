@@ -8,6 +8,7 @@ export class ArticleResDto {
     description: 'article id',
   })
   id: string;
+
   @ApiProperty({
     description: 'title of this article',
   })

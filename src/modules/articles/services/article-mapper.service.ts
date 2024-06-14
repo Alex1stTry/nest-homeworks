@@ -1,4 +1,5 @@
 import { ArticlesEntity } from '../../../database/entities/articles.entity';
+import { UserMapperService } from '../../user/services/user-mapper.service';
 import { ArticleResDto } from '../dto/res/article-res.dto';
 
 export class ArticleMapperService {
@@ -10,7 +11,10 @@ export class ArticleMapperService {
       description: articles.description,
       created: articles.created,
       updated: articles.updated,
-      tags: articles.tags.map((tag) => tag.name),
+      tags: articles.tags ? articles.tags.map((tag) => tag.name) : [],
+      user: articles.user
+        ? UserMapperService.toResponseDTO(articles.user)
+        : null,
     };
   }
 }

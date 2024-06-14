@@ -11,25 +11,25 @@ import { TransformHelper } from '../../../../common/helpers/transform.helper';
 
 export class BaseArticleReqDto {
   @IsString()
-  @Length(5, 25)
+  @Length(3, 25)
   @Transform(TransformHelper.trim)
   @Type(() => String)
   title: string;
 
   @IsString()
-  @Length(5, 255)
+  @Length(0, 500)
   @Type(() => String)
   @Transform(TransformHelper.trim)
   body: string;
 
   @IsString()
-  @Length(25, 100)
+  @Length(0, 150)
   @Type(() => String)
   @Transform(TransformHelper.trim)
   description: string;
 
   @IsArray()
-  @ArrayMinSize(1)
+  @ArrayMinSize(0)
   @ArrayMaxSize(10)
   @Transform(TransformHelper.trimArray)
   @Transform(TransformHelper.uniqueItems)

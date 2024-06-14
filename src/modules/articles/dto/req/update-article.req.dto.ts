@@ -4,6 +4,6 @@ import { BaseArticleReqDto } from './base-article-req.dto';
 
 export class UpdateArticleReqDto extends PickType(BaseArticleReqDto, [
   'title',
-  'body',
   'description',
+  'body',
 ]) {}

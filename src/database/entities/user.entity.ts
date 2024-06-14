@@ -50,7 +50,7 @@ export class UserEntity extends BaseModel {
   @OneToMany(() => CommentsEntity, (entity) => entity.comment)
   comments?: CommentsEntity[];
 
-  @OneToMany(() => ArticlesEntity, (entity) => entity.article)
+  @OneToMany(() => ArticlesEntity, (entity) => entity.user)
   articles?: ArticlesEntity[];
 
   @OneToMany(() => LikesEntity, (entity) => entity.user)

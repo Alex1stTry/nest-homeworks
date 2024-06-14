@@ -36,5 +36,5 @@ export class BaseUserResDto {
   @ApiProperty({
     description: 'The date the User was created',
   })
-  public readonly isFollowed?: boolean;
+  public readonly isFollowed: boolean;
 }
